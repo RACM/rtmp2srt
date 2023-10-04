@@ -1,0 +1,22 @@
+version: '3.3'
+
+services:
+  app:
+    image: rubenc2/rtmp2srt:1.4.6
+    hostname: app
+    container_name: rtmp2srt
+    restart: unless-stopped
+    networks:
+      - intelsat
+    ports:
+      - 443:443                  #HTTPS
+      - 8090:80/tcp              #Map host's port 8090 to container port 80
+      - 1935:1935/tcp            #RTMP port
+      - 4200:4200/udp            #Single UDP port for SRT
+      - 6000-6002:6000-6002/udp  #Range of UDP ports for SRT
+    environment:
+      - SERVER_IP=[your server ip] #will deprecate this option once port 80 is disabled
+
+networks:
+  intelsat:
+    driver: bridge

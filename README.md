@@ -1,4 +1,5 @@
 # RTMP2SRT
+(Intelsat specific)
 
 ## Introduction
 
@@ -15,11 +16,14 @@ The application has a Graph tab that will show the graph of all data points (pac
 1.- When the container is launched, it creates a self-signed certifiate for 365 days, HTTPS is enable and traffic is redirected to port 443 instead of 8090 or (HTTP)
 2.- Basic authentication is now enabled, there is no session management yet implemented.<br>
 User: I------------a<br>
-Pass: I------------s
+Pass: I------------s<br>
+I will create a generic image with Admin/Admin123 as user/pass. Remember that you can change these and other specific parameters by getting inside the running container:<br>
+
+```docker exec -it rtmp2srt bash```
 
 ## Starting the application
 
-There are two docker-compose files on this reposetory:
+There are two docker-compose files on this reposetory (only one on github):
 
 docker-compose.yml has specific ports opened for TCP and UDP traffic.
 
@@ -45,7 +49,7 @@ services:
       - 4200:4200/udp            #Single UDP port for SRT
       - 6000-6002:6000-6002/udp  #Range of UDP ports for SRT
     environment:
-      - SERVER_IP=[YOUR SERVER IP]
+      - SERVER_IP=[YOUR SERVER IP] #This is done to redirect all port 8090 traffic to 443 and it will be deprecated once we no longer use port 8090:80
 
 networks:
   intelsat:
@@ -96,11 +100,11 @@ You can use the test input stream to just test SRT (under SRT Configuration page
 
 ## Demo
 
-This is a demo app on our sandbox
+This is a demo app on our sandbox (link not enabled in github)
 
 ## Roadmap
 
-When having the time, I will work on an SRTMP2SRT application based on this same framework. the app will support RTMP, SRT, and RIST as input or output
+When having the time, I will work on an RSR2RS application based on this same framework. the app will support RTMP, SRT, and RIST as input and SRT or RIST as output
 
 ## License
 
